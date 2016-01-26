@@ -41,5 +41,17 @@ class Products(models.Model):
         return self.price
 
     def get_absolute_url(self):
-        return reverse("single_product", kwargs={"slug":self.slug})
-        #return "/products/%s/"%(self.slug)
+        return reverse("single_product", kwargs={"slug": self.slug})
+
+
+
+class ProductImage(models.Model):
+    product = models.ForeignKey(Products)
+    image = models.ImageField(upload_to='products/images/')
+    featured = models.BooleanField(default=False)
+    thumbnail = models.BooleanField(default=False)
+    active = models.BooleanField(default=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    def __unicode__(self):
+        return self.product.title
