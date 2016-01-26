@@ -55,3 +55,54 @@ class ProductImage(models.Model):
 
     def __unicode__(self):
         return self.product.title
+
+
+class VariationManager(models.Manager):
+
+    def sizes(self):
+
+         return self.all().filter(category="size")
+
+    def gender(self):
+
+         return self.all().filter(category="gender")
+
+    def color(self):
+
+         return self.all().filter(category="color")
+
+    def package(self):
+
+         return self.all().filter(category="package")
+
+
+VAR_CATEGORIES = (
+        ("size", "size"),
+        ("gender", "Gender"),
+        ("color", "color"),
+        ("package", "package"),
+)
+
+
+class Variation(models.Model):
+    # linking up the product variation to the product itself
+
+    product= models.ForeignKey(Products)
+
+    # all the categories expressed within the tuple VAR_CATEGORIES now placed in the model
+    category= models.CharField(max_length=120, choices=VAR_CATEGORIES, default="color")
+
+    # linking up the product variation to the product image.
+    image= models.ForeignKey(ProductImage, null=True, blank=True)
+
+    title = models.CharField(max_length=120)
+    price = models.DecimalField(max_digits=100, decimal_places=2, null=True, blank=True)
+    active = models.BooleanField(default=True)
+    updated = models.DateTimeField(auto_now_add=False, auto_now=True)
+
+    #setting up the variations manager so that the variations can work
+    objects = VariationManager()
+
+
+    def __unicode__(self):
+       return self.title
