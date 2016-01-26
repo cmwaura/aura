@@ -27,7 +27,7 @@ class Products(models.Model):
     active = models.BooleanField(default=True)
 
     def __unicode__(self):
-        
+
         '''
 
         :return: it will return the title of the product  on the admin page.
