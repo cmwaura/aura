@@ -17,9 +17,11 @@ from django.conf.urls import url
 from django.contrib import admin
 from django.conf import settings
 from django.conf.urls.static import static
+from products.views import get_products as get_products
 # from django.conf.url import include
 urlpatterns = [
     url(r'^admin/', admin.site.urls),
+    url(r'^$', get_products)
 ]
 
 if settings.DEBUG:
